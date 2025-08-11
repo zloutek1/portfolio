@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalTrigger } from './animated-modal';
+import { GlowingEffect } from './glowing-effect';
 
 interface ProjectImage {
   src: string;
@@ -49,10 +50,19 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, children })
         {children}
       </ModalTrigger>
       
-             <ModalBody className="max-w-4xl w-full mx-4 max-h-[90vh]">
-         <ModalContent className="p-0 overflow-y-auto">
-          {/* Header */}
-          <div className="p-6 border-b border-neutral-800">
+                    <ModalBody className="max-w-4xl w-full mx-4 max-h-[90vh]">
+         <ModalContent className="p-0 overflow-y-auto relative">
+                       <GlowingEffect 
+              variant="white" 
+              glow={true} 
+              disabled={false}
+              blur={1}
+              spread={50}
+              proximity={100}
+              borderWidth={2}
+            />
+           {/* Header */}
+           <div className="p-6 border-b border-neutral-800">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-bold text-white mb-2">{project.title}</h2>
@@ -106,11 +116,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, children })
           {project.images.length > 0 && (
             <div className="p-6 border-b border-neutral-800">
               <div className="relative group">
-                <img
-                  src={project.images[currentImageIndex].src}
-                  alt={project.images[currentImageIndex].alt}
-                  className="w-full h-64 object-cover rounded-lg"
-                />
+                                 <img
+                   src={project.images[currentImageIndex].src}
+                   alt={project.images[currentImageIndex].alt}
+                   className="w-full h-64 object-contain rounded-lg bg-neutral-800/50"
+                 />
                 
                 {/* Navigation arrows */}
                 {project.images.length > 1 && (

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ProjectModal } from './project-modal';
+import { GlowingEffect } from './glowing-effect';
 
 interface ProjectImage {
   src: string;
@@ -31,12 +32,21 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <ProjectModal project={project}>
       <div className="group relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-xl overflow-hidden hover:border-neutral-700 transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 cursor-pointer">
+        <GlowingEffect 
+          variant="white" 
+          glow={true} 
+          disabled={false}
+          blur={1}
+          spread={40}
+          proximity={50}
+          borderWidth={2}
+        />
         {/* Image */}
-        <div className="relative h-48 overflow-hidden">
+        <div className="relative h-48 overflow-hidden mx-1 mt-1">
           <img
             src={project.images[0]?.src || '/images/placeholder.png'}
             alt={project.images[0]?.alt || project.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500 bg-neutral-800/50"
           />
           
           {/* Overlay */}

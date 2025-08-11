@@ -6,6 +6,7 @@ import { Timeline } from "./components/ui/timeline";
 import { StickyScroll } from "./components/ui/sticky-scroll-reveal";
 import Masonry from "./blocks/Components/Masonry/Masonry";
 import { ProjectCard } from "./components/ui/project-card";
+import bannerAppImg from "./assets/bannerAppImg.png";
 
 interface Experience {
   role: string;
@@ -43,8 +44,7 @@ const projects: Project[] = [
     description: "A comprehensive backend system for parcel tracking and management, handling over 30,000 parcels monthly. The system integrates with multiple shipping carriers, provides real-time tracking updates, and includes a robust payment gateway integration.",
     shortDescription: "Backend system handling parcel state changes for 30,000+ parcels monthly, integrated payment gateway.",
     images: [
-      { src: "/images/balikovna.png", alt: "Balíkovna Backend Dashboard", caption: "Main dashboard showing parcel tracking" },
-      { src: "/images/balikovna-2.png", alt: "API Documentation", caption: "REST API documentation and testing interface" }
+      { src: bannerAppImg, alt: "Balíkovna Backend Dashboard", caption: "Main dashboard showing parcel tracking" },
     ],
     techStack: ["Java", "Spring Boot", "Kafka", "PostgreSQL", "Redis", "Docker", "Kubernetes"],
     features: [
@@ -60,7 +60,7 @@ const projects: Project[] = [
       "Integrated multiple payment gateways with fallback mechanisms",
       "Optimized database queries for high-volume tracking data"
     ],
-    github: "https://github.com/zloutek1/balikovna",
+    liveUrl: "https://www.balikovna.cz/en/app",
     role: "Lead Backend Developer",
     timeline: "8 months",
     company: "InQool"
@@ -117,9 +117,9 @@ const projects: Project[] = [
       "Implemented dynamic theming with automatic updates",
       "Ensured reproducible development environments"
     ],
-    github: "https://github.com/zloutek1/nixos-config",
+    github: "https://github.com/zloutek1/nixos",
     role: "Personal Project",
-    timeline: "Ongoing",
+    timeline: "2025",
     company: "Personal"
   }
 ];
@@ -214,7 +214,7 @@ function HeroSection(): React.JSX.Element {
       </div>
       
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-8">
+      <div className="relative z-10 max-w-5xl mx-auto px-8">
         <h2 className="text-6xl md:text-7xl font-extrabold mb-8 bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent">
           Hi, I'm Tomas
         </h2>
@@ -254,7 +254,7 @@ function AboutSection(): React.JSX.Element {
       <div className="absolute bottom-20 right-20 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full blur-xl animate-pulse delay-1000"></div>
       <div className="absolute top-1/2 left-1/3 w-20 h-20 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full blur-xl animate-pulse delay-500"></div>
       
-      <div className="max-w-3xl text-center px-4 about-content relative z-10">
+      <div className="max-w-4xl text-center px-4 about-content relative z-10">
         <h2 className="text-4xl font-bold mb-6">About Me</h2>
         <ScrollReveal textClassName="text-lg leading-relaxed text-gray-300">
           I am a passionate software engineer with a focus on backend development and scalable web applications.
@@ -329,7 +329,7 @@ function ExperienceSection(): React.JSX.Element {
       <div className="absolute top-32 right-32 w-40 h-40 bg-gradient-to-br from-indigo-500/15 to-purple-500/15 rounded-full blur-2xl animate-pulse delay-700"></div>
       <div className="absolute bottom-32 left-32 w-28 h-28 bg-gradient-to-br from-teal-500/15 to-cyan-500/15 rounded-full blur-2xl animate-pulse delay-300"></div>
       
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-8 relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">Work Experience</h2>
         
         <Timeline data={timelineData} />
@@ -345,7 +345,7 @@ export const ProjectsSection: React.FC = () => {
         <h1 className="text-5xl font-extrabold text-center mb-16">Projects</h1>
 
         {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
@@ -363,7 +363,7 @@ function ContactSection(): React.JSX.Element {
       <div className="absolute top-32 left-1/4 w-28 h-28 bg-gradient-to-br from-emerald-500/15 to-green-500/15 rounded-full blur-2xl animate-pulse delay-300"></div>
       <div className="absolute bottom-32 right-1/4 w-40 h-40 bg-gradient-to-br from-orange-500/15 to-red-500/15 rounded-full blur-2xl animate-pulse delay-700"></div>
       
-      <div className="max-w-5xl mx-auto px-8 text-center relative z-10">
+      <div className="max-w-6xl mx-auto px-8 text-center relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold mb-8">Contact</h2>
         <p className="text-xl opacity-90 mb-12 max-w-2xl mx-auto">
           Let's work together! Reach out to me via email or GitHub.

@@ -139,10 +139,17 @@ const GlowingEffect = memo(
               "--repeating-conic-gradient-times": "5",
               "--gradient":
                 variant === "white"
-                  ? `repeating-conic-gradient(
+                  ? `radial-gradient(circle, #ffffff 100%, #ffffff 100%),
+                radial-gradient(circle at 40% 40%, #ffffff 100%, #ffffff 100%), 
+                radial-gradient(circle at 60% 60%, #ffffff 100%, #ffffff 100%), 
+                radial-gradient(circle at 40% 60%, #ffffff 100%, #ffffff 100%),
+                repeating-conic-gradient(
                   from 236.84deg at 50% 50%,
-                  var(--black),
-                  var(--black) calc(25% / var(--repeating-conic-gradient-times))
+                  #ffffff 0%,
+                  #ffffff calc(25% / var(--repeating-conic-gradient-times)),
+                  #ffffff calc(50% / var(--repeating-conic-gradient-times)), 
+                  #ffffff calc(75% / var(--repeating-conic-gradient-times)),
+                  #ffffff calc(100% / var(--repeating-conic-gradient-times))
                 )`
                   : `radial-gradient(circle, #ff6b9d 40%, #ff6b9d80 60%),
                 radial-gradient(circle at 40% 40%, #ffd93d 30%, #ffd93d80 50%), 
