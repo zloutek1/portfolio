@@ -146,15 +146,26 @@ function HeroSection(): React.JSX.Element {
         <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-12 opacity-90 leading-relaxed">
           Backend developer with a passion for building reliable systems and experimenting with UI interactions.
         </p>
-        <a
-          href="/assets/Tomas_Ljutenko_CV.pdf"
-          download
-          className="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-        >
-          <span className="relative z-10 text-white font-semibold text-lg">Download CV</span>
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -skew-x-12"></div>
-        </a>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* Primary button - scroll to experience */}
+          <a
+            href="#experience"
+            className="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            <span className="relative z-10 text-white font-semibold text-lg">View Experience</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -skew-x-12"></div>
+          </a>
+
+          {/* Secondary button - download CV */}
+          <a
+            href="/assets/Tomas_Ljutenko_CV.pdf"
+            download
+            className="group relative inline-flex items-center px-8 py-4 bg-transparent border-2 border-white/30 rounded-xl hover:bg-white/10 hover:border-white/50 transition-all duration-300 transform hover:scale-105"
+          >
+            <span className="relative z-10 text-white font-semibold text-lg">Download CV</span>
+          </a>
+        </div>
       </div>
     </section>
   );
