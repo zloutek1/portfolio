@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ScrollReveal from "./blocks/TextAnimations/ScrollReveal/ScrollReveal";
 import './App.css'
 import Orb from "./blocks/Backgrounds/Orb/Orb";
@@ -50,14 +50,81 @@ const projects: Project[] = [
 ];
 
 function Navbar(): React.JSX.Element {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { href: "#about", label: "About" },
+    { href: "#experience", label: "Experience" },
+    { href: "#projects", label: "Projects" },
+    { href: "#contact", label: "Contact" }
+  ];
+
   return (
-    <nav className="fixed w-full flex justify-between items-center px-8 py-6 bg-black/80 backdrop-blur-md z-50 border-b border-white/10">
-      <h1 className="text-2xl font-bold text-white">Tomas Ljutenko</h1>
-      <div className="flex gap-8 text-white">
-        <a href="#about" className="hover:text-blue-400 transition-colors duration-300">About</a>
-        <a href="#experience" className="hover:text-blue-400 transition-colors duration-300">Experience</a>
-        <a href="#projects" className="hover:text-blue-400 transition-colors duration-300">Projects</a>
-        <a href="#contact" className="hover:text-blue-400 transition-colors duration-300">Contact</a>
+    <nav 
+      className={`
+        fixed top-6 left-1/2 transform -translate-x-1/2 z-50
+        px-8 py-4 rounded-full
+        bg-white/10 backdrop-blur-xl
+        border border-white/20
+        shadow-2xl shadow-black/20
+        transition-all duration-500 ease-out
+        hover:bg-white/15 hover:border-white/30
+        hover:shadow-2xl hover:shadow-black/30
+        ${isScrolled ? 'bg-white/15 border-white/30 shadow-2xl shadow-black/30' : ''}
+      `}
+    >
+      <div className="flex items-center gap-8">
+        {/* Left side - first 2 links */}
+        <div className="flex gap-6">
+          {navLinks.slice(0, 2).map((link) => (
+            <a 
+              key={link.href}
+              href={link.href} 
+              className="
+                relative px-3 py-2 rounded-lg
+                text-white/80 hover:text-white transition-all duration-300
+                hover:bg-white/10
+                group
+              "
+            >
+              <span className="relative z-10">{link.label}</span>
+              <div className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
+          ))}
+        </div>
+
+        {/* Center - your name */}
+        <h1 className="text-xl font-bold text-white tracking-tight px-4">
+          Tomas Ljutenko
+        </h1>
+
+        {/* Right side - last 2 links */}
+        <div className="flex gap-6">
+          {navLinks.slice(2, 4).map((link) => (
+            <a 
+              key={link.href}
+              href={link.href} 
+              className="
+                relative px-3 py-2 rounded-lg
+                text-white/80 hover:text-white transition-all duration-300
+                hover:bg-white/10
+                group
+              "
+            >
+              <span className="relative z-10">{link.label}</span>
+              <div className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </a>
+          ))}
+        </div>
       </div>
     </nav>
   );
@@ -65,7 +132,7 @@ function Navbar(): React.JSX.Element {
 
 function HeroSection(): React.JSX.Element {
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center text-center bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-center items-center text-center bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white relative overflow-hidden pt-24">
       {/* Orb in background */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30">
         <Orb />
