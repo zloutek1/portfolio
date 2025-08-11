@@ -5,6 +5,7 @@ import Orb from "./blocks/Backgrounds/Orb/Orb";
 import { Timeline } from "./components/ui/timeline";
 import { StickyScroll } from "./components/ui/sticky-scroll-reveal";
 import Masonry from "./blocks/Components/Masonry/Masonry";
+import { ProjectCard } from "./components/ui/project-card";
 
 interface Experience {
   role: string;
@@ -13,40 +14,114 @@ interface Experience {
   description: string;
 }
 
+interface ProjectImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
 interface Project {
+  id: string;
   title: string;
-  tags: string[];
   description: string;
-  image: string;
-  github: string;
-  url?: string;
+  shortDescription: string;
+  images: ProjectImage[];
+  techStack: string[];
+  features: string[];
+  challenges: string[];
+  github?: string;
+  liveUrl?: string;
+  role: string;
+  timeline: string;
+  company?: string;
 }
 
 const projects: Project[] = [
   {
+    id: "balikovna",
     title: "Balíkovna Backend",
-    tags: ["Java", "Spring Boot", "Kafka"],
-    description:
-      "Backend system handling parcel state changes for 30,000+ parcels monthly, integrated payment gateway.",
-    image: "/images/balikovna.png",
+    description: "A comprehensive backend system for parcel tracking and management, handling over 30,000 parcels monthly. The system integrates with multiple shipping carriers, provides real-time tracking updates, and includes a robust payment gateway integration.",
+    shortDescription: "Backend system handling parcel state changes for 30,000+ parcels monthly, integrated payment gateway.",
+    images: [
+      { src: "/images/balikovna.png", alt: "Balíkovna Backend Dashboard", caption: "Main dashboard showing parcel tracking" },
+      { src: "/images/balikovna-2.png", alt: "API Documentation", caption: "REST API documentation and testing interface" }
+    ],
+    techStack: ["Java", "Spring Boot", "Kafka", "PostgreSQL", "Redis", "Docker", "Kubernetes"],
+    features: [
+      "Real-time parcel tracking with Kafka event streaming",
+      "Multi-carrier shipping integration",
+      "Payment gateway with multiple providers",
+      "RESTful API with comprehensive documentation",
+      "Automated testing with 90%+ coverage"
+    ],
+    challenges: [
+      "Scaled from 1,000 to 30,000+ parcels monthly",
+      "Implemented event-driven architecture for real-time updates",
+      "Integrated multiple payment gateways with fallback mechanisms",
+      "Optimized database queries for high-volume tracking data"
+    ],
     github: "https://github.com/zloutek1/balikovna",
+    role: "Lead Backend Developer",
+    timeline: "8 months",
+    company: "InQool"
   },
   {
+    id: "esd",
     title: "Electronic Construction Diary",
-    tags: ["Java", "Spring Boot", "LDAP", "KEP"],
-    description:
-      "Multi-tenant backend design with LDAP sync, qualified electronic signature integration, and extensive client collaboration.",
-    image: "/images/esd.png",
+    description: "Enterprise multi-tenant system for construction project management with qualified electronic signature integration. The platform supports LDAP synchronization, extensive client collaboration features, and compliance with construction industry regulations.",
+    shortDescription: "Multi-tenant backend design with LDAP sync, qualified electronic signature integration, and extensive client collaboration.",
+    images: [
+      { src: "/images/esd.png", alt: "ESD Main Interface", caption: "Construction project dashboard" },
+      { src: "/images/esd-2.png", alt: "Document Management", caption: "Document workflow and signature system" }
+    ],
+    techStack: ["Java", "Spring Boot", "LDAP", "KEP", "PostgreSQL", "RabbitMQ", "Elasticsearch"],
+    features: [
+      "Multi-tenant architecture with data isolation",
+      "LDAP integration for enterprise authentication",
+      "Qualified electronic signature (KEP) integration",
+      "Document workflow management",
+      "Real-time collaboration tools",
+      "Comprehensive audit logging"
+    ],
+    challenges: [
+      "Designed scalable multi-tenant architecture",
+      "Integrated complex LDAP synchronization",
+      "Implemented qualified electronic signature workflow",
+      "Ensured data isolation between tenants"
+    ],
     github: "https://github.com/zloutek1/esd",
+    role: "Backend Developer",
+    timeline: "12 months",
+    company: "InQool"
   },
   {
-    title: "NixOS Config",
-    tags: ["NixOS", "Home-Manager", "Hyprland"],
-    description:
-      "Personalized, modular NixOS and Home-Manager setup with dynamic theming and Lenovo Yoga optimizations.",
-    image: "/images/nixos.png",
+    id: "nixos",
+    title: "NixOS Configuration",
+    description: "Personalized, modular NixOS and Home-Manager setup featuring dynamic theming, Lenovo Yoga optimizations, and a comprehensive development environment. The configuration includes custom scripts, automated system updates, and seamless environment switching.",
+    shortDescription: "Personalized, modular NixOS and Home-Manager setup with dynamic theming and Lenovo Yoga optimizations.",
+    images: [
+      { src: "https://github.com/zloutek1/nixos/raw/main/assets/desktop.png", alt: "NixOS Desktop", caption: "Custom desktop environment with dynamic theming" }
+    ],
+    techStack: ["NixOS", "Home-Manager", "Hyprland", "Bash", "Python", "Git"],
+    features: [
+      "Dynamic theme switching with automatic wallpaper updates",
+      "Lenovo Yoga specific optimizations and power management",
+      "Modular configuration with environment-specific modules",
+      "Automated system updates and package management",
+      "Custom development environment setup",
+      "Seamless environment switching between work and personal"
+    ],
+    challenges: [
+      "Created modular configuration system for different environments",
+      "Optimized power management for Lenovo Yoga hardware",
+      "Implemented dynamic theming with automatic updates",
+      "Ensured reproducible development environments"
+    ],
     github: "https://github.com/zloutek1/nixos-config",
-  },
+    role: "Personal Project",
+    timeline: "Ongoing",
+    company: "Personal"
+  }
 ];
 
 function Navbar(): React.JSX.Element {
@@ -255,7 +330,7 @@ function ExperienceSection(): React.JSX.Element {
       <div className="absolute bottom-32 left-32 w-28 h-28 bg-gradient-to-br from-teal-500/15 to-cyan-500/15 rounded-full blur-2xl animate-pulse delay-300"></div>
       
       <div className="max-w-6xl mx-auto px-8 relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center">Work Experience</h2>
+        <h2 className="text-4xl md:text-5xl font-bold mb-8 text-center">Work Experience</h2>
         
         <Timeline data={timelineData} />
       </div>
@@ -264,41 +339,17 @@ function ExperienceSection(): React.JSX.Element {
 }
 
 export const ProjectsSection: React.FC = () => {
-  // Build the array the StickyScroll expects
-  const content = projects.map((p) => ({
-    title: p.title,
-    description: p.description,
-    tags: p.tags,
-    action: p.github ? { label: "View on GitHub", url: p.github } : p.url ? { label: "Visit Site", url: p.url } : undefined,
-    image: p.image,
-  }));
-
   return (
     <section id="projects" className="w-full min-h-screen bg-neutral-950 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <h1 className="text-5xl font-extrabold text-center mb-16">Projects</h1>
 
-        {/* Pass `content` prop (not children) */}
-        <Masonry items={[
-          {
-            id: "1",
-            img: "https://picsum.photos/id/1015/600/900?grayscale",
-            url: "https://example.com/one",
-            height: 400,
-          },
-          {
-            id: "2",
-            img: "https://picsum.photos/id/1011/600/750?grayscale",
-            url: "https://example.com/two",
-            height: 250,
-          },
-          {
-            id: "3",
-            img: "https://picsum.photos/id/1020/600/800?grayscale",
-            url: "https://example.com/three",
-            height: 600,
-          }
-        ]} />
+        {/* Project Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
       </div>
     </section>
   );
