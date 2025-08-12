@@ -38,7 +38,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         {/* Single shared vertical line */}
         <div
           style={{ height: height + "px" }}
-          className="absolute left-38 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent via-neutral-700 to-transparent [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
+          className="absolute left-31 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent via-neutral-700 to-transparent [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <motion.div
             style={{ height: heightTransform, opacity: opacityTransform }}
@@ -49,7 +49,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         {data.map((item, index) => (
           <div key={index} className="grid grid-cols-[auto_20px_1fr] gap-4 pt-10">
             {/* Date (title) first */}
-            <div className="self-start min-w-32 pr-2">
+            <div className="self-start min-w-25 pt-1">
               <h3 className="text-sm md:text-lg font-bold text-blue-300">{item.title}</h3>
             </div>
 
