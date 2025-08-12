@@ -1,5 +1,4 @@
 import React from "react";
-import ScrollReveal from "@/components/ui/scroll-reveal";
 import { GlowingEffect } from "../ui/glowing-effect";
 
 function AchievementCard({ title, description }: { title: string, description: string }): React.JSX.Element {

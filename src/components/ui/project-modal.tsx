@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, ModalBody, ModalContent, ModalFooter, ModalTrigger } from './animated-modal';
+import { Modal, ModalBody, ModalContent, ModalTrigger } from './animated-modal';
 import { GlowingEffect } from './glowing-effect';
 
 interface ProjectImage {
