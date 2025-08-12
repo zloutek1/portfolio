@@ -8,8 +8,8 @@ export function ExperienceSection({ experience }: { experience: Experience[] }):
     content: (
       <div className="w-full max-w-4xl">
         <div className="flex items-center gap-4 mb-3">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
-            {exp.company.charAt(0)}
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg overflow-hidden">
+            {!exp.image ? exp.company.charAt(0) : <img src={exp.image} />}
           </div>
           <h3 className="text-2xl font-bold text-white">{exp.company}</h3>
         </div>

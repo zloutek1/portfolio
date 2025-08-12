@@ -49,7 +49,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         {data.map((item, index) => (
           <div key={index} className="grid grid-cols-[auto_20px_1fr] gap-4 pt-10">
             {/* Date (title) first */}
-            <div className="sticky top-40 self-start min-w-32 pr-4">
+            <div className="self-start min-w-32 pr-2">
               <h3 className="text-sm md:text-lg font-bold text-blue-300">{item.title}</h3>
             </div>
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 export function Contact(): React.JSX.Element {
-  const email = "tomas@example.com"; // replace with your real email
+  const email = "tomas.ljutenko@gmail.com";
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(email);
