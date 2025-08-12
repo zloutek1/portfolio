@@ -31,7 +31,7 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <ProjectModal project={project}>
-      <div className="group relative bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-xl overflow-hidden hover:border-neutral-700 transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 cursor-pointer">
+      <div className="group relative rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 cursor-pointer">
         <GlowingEffect 
           variant="white" 
           glow={true} 
@@ -42,7 +42,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           borderWidth={2}
         />
         {/* Image */}
-        <div className="relative h-48 overflow-hidden mx-1 mt-1">
+        <div className="h-48 overflow-hidden mx-1 mt-1">
           <img
             src={project.images[0]?.src || '/images/placeholder.svg'}
             alt={project.images[0]?.alt || project.title}

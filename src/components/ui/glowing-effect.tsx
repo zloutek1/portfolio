@@ -1,3 +1,7 @@
+/*
+  Installed from https://ui.aceternity.com/components/glowing-effect
+*/
+
 "use client";
 
 import { memo, useCallback, useEffect, useRef } from "react";

@@ -38,7 +38,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         {/* Single shared vertical line */}
         <div
           style={{ height: height + "px" }}
-          className="absolute left-[calc(50%+6rem)] md:left-[calc(50%+6rem)] top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent via-neutral-700 to-transparent [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
+          className="absolute left-38 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent via-neutral-700 to-transparent [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <motion.div
             style={{ height: heightTransform, opacity: opacityTransform }}
@@ -55,7 +55,7 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
             {/* Node only, no per-item line */}
             <div className="relative">
-              <div className="absolute left-1/2 -translate-x-1/2 h-8 w-8 rounded-full bg-black flex items-center justify-center">
+              <div className="absolute left-1/2 -translate-x-1/2 h-8 w-8 rounded-full flex items-center justify-center">
                 <div className="h-3 w-3 rounded-full bg-neutral-800 border border-neutral-700" />
               </div>
             </div>
