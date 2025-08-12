@@ -3,8 +3,6 @@ import ScrollReveal from "./blocks/TextAnimations/ScrollReveal/ScrollReveal";
 import './App.css'
 import Orb from "./blocks/Backgrounds/Orb/Orb";
 import { Timeline } from "./components/ui/timeline";
-import { StickyScroll } from "./components/ui/sticky-scroll-reveal";
-import Masonry from "./blocks/Components/Masonry/Masonry";
 import { ProjectCard } from "./components/ui/project-card";
 import bannerAppImg from "./assets/bannerAppImg.png";
 
@@ -242,6 +240,8 @@ function HeroSection(): React.JSX.Element {
           </a>
         </div>
       </div>
+      {/* Bottom fade to seamlessly blend into next section */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent via-black/70 to-black" />
     </section>
   );
 }
