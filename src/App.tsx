@@ -7,19 +7,8 @@ import { ExperienceSection } from "@/components/sections/Experience";
 import { ProjectsSection } from "@/components/sections/Projects";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
-import { projects } from "@/data/projects.data";
-import { experience } from "@/data/experience.data";
-
-// types moved to src/data
-
-// legacy type removed
-
-// types moved to src/data
-
-// legacy in-file data removed; now imported from src/data
-
-// section imports are already at the top
-// data imports are already at the top
+import { projects } from "@/data/projects";
+import { experience } from "@/data/experience";
 
 function App(): React.JSX.Element {
   return (
