@@ -50,17 +50,17 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, children })
         {children}
       </ModalTrigger>
       
-                    <ModalBody className="max-w-4xl w-full mx-4 max-h-[90vh]">
-         <ModalContent className="p-0 overflow-y-auto relative">
-                       <GlowingEffect 
-              variant="white" 
-              glow={true} 
-              disabled={false}
-              blur={1}
-              spread={50}
-              proximity={100}
-              borderWidth={2}
-            />
+                           <ModalBody className="max-w-5xl w-full mx-4 max-h-[90vh] relative">
+          <GlowingEffect 
+            variant="white" 
+            glow={true} 
+            disabled={false}
+            blur={1}
+            spread={120}
+            proximity={200}
+            borderWidth={2}
+          />
+          <ModalContent className="p-0 overflow-y-auto relative">
            {/* Header */}
            <div className="p-6 border-b border-neutral-800">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -221,8 +221,8 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, children })
              </div>
            )}
            
-           {/* Bottom padding for better scrolling experience */}
-           <div className="h-6"></div>
+                       {/* Bottom padding for better scrolling experience */}
+            <div className="h-12"></div>
          </ModalContent>
       </ModalBody>
     </Modal>
