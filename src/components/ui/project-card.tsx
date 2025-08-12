@@ -31,7 +31,7 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <ProjectModal project={project}>
-      <div className="group relative rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-black/20 cursor-pointer">
+      <div className="group relative rounded-xl transition-all duration-300 cursor-pointer">
         <GlowingEffect 
           variant="white" 
           glow={true} 
@@ -57,7 +57,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           />
           
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
           
           {/* Role badge */}
           <div className="absolute top-3 left-3">

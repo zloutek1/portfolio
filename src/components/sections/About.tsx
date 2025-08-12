@@ -12,7 +12,7 @@ function AchievementCard({ title, description }: { title: string, description: s
         blur={1}
         spread={80}
         proximity={300}
-        borderWidth={2}
+        borderWidth={1}
       />
       <div className="text-xl font-bold">{title}</div>
       <div className="text-neutral-400">{description}</div>

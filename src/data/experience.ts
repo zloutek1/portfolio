@@ -9,6 +9,13 @@ export interface Experience {
 
 export const experience: Experience[] = [
   {
+    role: "One Engineer",
+    company: "Oracle NetSuite",
+    years: "2025 - now ",
+    description: "Working on ERP system managing Projects, Resource Planning, Time allocation, etc.",
+    tags: ["Java","JavaScript","SuiteScript"],
+  },
+  {
     role: "Backend Developer",
     company: "InQool",
     years: "2022 - 2025",
