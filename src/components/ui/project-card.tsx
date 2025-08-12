@@ -44,8 +44,15 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         {/* Image */}
         <div className="relative h-48 overflow-hidden mx-1 mt-1">
           <img
-            src={project.images[0]?.src || '/images/placeholder.png'}
+            src={project.images[0]?.src || '/images/placeholder.svg'}
             alt={project.images[0]?.alt || project.title}
+            loading="lazy"
+            decoding="async"
+            onError={(e) => {
+              const target = e.currentTarget as HTMLImageElement;
+              if (target.src.endsWith('/images/placeholder.svg')) return;
+              target.src = '/images/placeholder.svg';
+            }}
             className="w-full h-full object-contain rounded-lg group-hover:scale-105 transition-transform duration-500 bg-neutral-800/50"
           />
           

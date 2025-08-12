@@ -113,12 +113,19 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, children })
           </div>
 
           {/* Image Gallery */}
-          {project.images.length > 0 && (
+           {project.images.length > 0 && (
             <div className="p-6 border-b border-neutral-800">
               <div className="relative group">
-                                 <img
-                   src={project.images[currentImageIndex].src}
+                 <img
+                   src={project.images[currentImageIndex].src || '/images/placeholder.svg'}
                    alt={project.images[currentImageIndex].alt}
+                   loading="lazy"
+                   decoding="async"
+                   onError={(e) => {
+                     const target = e.currentTarget as HTMLImageElement;
+                     if (target.src.endsWith('/images/placeholder.svg')) return;
+                     target.src = '/images/placeholder.svg';
+                   }}
                    className="w-full h-64 object-contain rounded-lg bg-neutral-800/50"
                  />
                 

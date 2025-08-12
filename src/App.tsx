@@ -124,6 +124,7 @@ const projects: Project[] = [
 
 function Navbar(): React.JSX.Element {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [active, setActive] = useState<string>("about");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -134,11 +135,29 @@ function Navbar(): React.JSX.Element {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const sectionIds = ["about", "experience", "projects", "contact"]; 
+    const observers: IntersectionObserver[] = [];
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActive(id);
+        },
+        { root: null, threshold: 0.5 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
   const navLinks = [
     { href: "#about", label: "About" },
     { href: "#experience", label: "Experience" },
     { href: "#projects", label: "Projects" },
-    { href: "#contact", label: "Contact" }
+    { href: "#contact", label: "Contact" },
   ];
 
   return (
@@ -168,8 +187,9 @@ function Navbar(): React.JSX.Element {
                 hover:bg-white/10
                 group
               "
+              aria-current={active === link.href.substring(1) ? 'page' : undefined}
             >
-              <span className="relative z-10">{link.label}</span>
+              <span className={`relative z-10 ${active === link.href.substring(1) ? 'text-white font-semibold' : ''}`}>{link.label}</span>
               <div className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
           ))}
@@ -192,8 +212,9 @@ function Navbar(): React.JSX.Element {
                 hover:bg-white/10
                 group
               "
+              aria-current={active === link.href.substring(1) ? 'page' : undefined}
             >
-              <span className="relative z-10">{link.label}</span>
+              <span className={`relative z-10 ${active === link.href.substring(1) ? 'text-white font-semibold' : ''}`}>{link.label}</span>
               <div className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
           ))}
@@ -213,11 +234,11 @@ function HeroSection(): React.JSX.Element {
       
       {/* Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-8">
-        <h2 className="text-6xl md:text-7xl font-extrabold mb-8 bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent">
-          Hi, I'm Tomas
-        </h2>
-        <p className="text-xl md:text-2xl max-w-2xl mx-auto mb-12 opacity-90 leading-relaxed">
-          Backend developer with a passion for building reliable systems and experimenting with UI interactions.
+        <h1 className="text-6xl md:text-7xl font-extrabold mb-4 bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent">
+          Tomas Ljutenko
+        </h1>
+        <p className="text-lg md:text-xl max-w-3xl mx-auto mb-12 opacity-90 leading-relaxed">
+          Backend engineer building reliable, event‑driven systems. Kafka, Spring Boot, Postgres. Shipped parcel tracking at 30k+/mo and multi‑tenant platforms with qualified e‑signatures.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           {/* Primary button - scroll to experience */}
@@ -234,6 +255,7 @@ function HeroSection(): React.JSX.Element {
           <a
             href="/assets/Tomas_Ljutenko_CV.pdf"
             download
+            rel="noopener noreferrer"
             className="group relative inline-flex items-center px-8 py-4 bg-transparent border-2 border-white/30 rounded-xl hover:bg-white/10 hover:border-white/50 transition-all duration-300 transform hover:scale-105"
           >
             <span className="relative z-10 text-white font-semibold text-lg">Download CV</span>
@@ -250,18 +272,38 @@ function AboutSection(): React.JSX.Element {
   return (
     <section id="about" className="py-20 bg-black text-white flex items-center justify-center relative overflow-hidden">
       {/* Floating gradient orbs */}
-      <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-xl animate-pulse"></div>
-      <div className="absolute bottom-20 right-20 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full blur-xl animate-pulse delay-1000"></div>
-      <div className="absolute top-1/2 left-1/3 w-20 h-20 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full blur-xl animate-pulse delay-500"></div>
+      <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-20 w-24 h-24 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+      <div className="absolute top-1/2 left-1/3 w-20 h-20 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-full blur-xl animate-pulse delay-500"></div>
       
       <div className="max-w-4xl text-center px-4 about-content relative z-10">
         <h2 className="text-4xl font-bold mb-6">About Me</h2>
         <ScrollReveal textClassName="text-lg leading-relaxed text-gray-300">
-          I am a passionate software engineer with a focus on backend development and scalable web applications.
-          With years of experience in projects ranging from parcel shipping platforms to enterprise multi-tenant systems,
-          I enjoy building solutions that are efficient, reliable, and user-friendly. I also love experimenting with
-          modern UI effects and interactive components to make applications both functional and delightful.
+          I design and operate event‑driven backends in JVM stacks. I enjoy turning messy integrations into predictable systems with clear SLAs.
+          Recently: scaled parcel tracking from 1k → 30k+ parcels/month and delivered multi‑tenant platforms with qualified e‑signatures.
+          I focus on high‑throughput messaging, observability, and resilient APIs.
         </ScrollReveal>
+        {/* Inline achievements */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-center">
+            <div className="text-xl font-bold">30k+ parcels/mo</div>
+            <div className="text-neutral-400">Parcel tracking throughput</div>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-center">
+            <div className="text-xl font-bold">90%+ coverage</div>
+            <div className="text-neutral-400">Critical services</div>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-center">
+            <div className="text-xl font-bold">-48% latency</div>
+            <div className="text-neutral-400">Processing pipeline</div>
+          </div>
+        </div>
+        {/* Inline tech */}
+        <div className="mt-8 flex flex-wrap gap-2 justify-center">
+          {['Java','Spring Boot','Kafka','PostgreSQL','Redis','Docker','Kubernetes','LDAP','Elasticsearch'].map(t => (
+            <span key={t} className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-neutral-200 text-sm">{t}</span>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -342,7 +384,7 @@ export const ProjectsSection: React.FC = () => {
   return (
     <section id="projects" className="w-full min-h-screen bg-neutral-950 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <h1 className="text-5xl font-extrabold text-center mb-16">Projects</h1>
+        <h2 className="text-5xl font-extrabold text-center mb-16">Projects</h2>
 
         {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -355,8 +397,17 @@ export const ProjectsSection: React.FC = () => {
   );
 };
 
+// Removed standalone Achievements/Services/Tech sections per request
+
 
 function ContactSection(): React.JSX.Element {
+  const email = "tomas@example.com"; // TODO: replace with your real email
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      alert("Email copied to clipboard");
+    } catch (_) {}
+  };
   return (
     <section id="contact" className="py-32 bg-black text-white relative overflow-hidden">
       {/* Floating gradient orbs */}
@@ -366,17 +417,24 @@ function ContactSection(): React.JSX.Element {
       <div className="max-w-6xl mx-auto px-8 text-center relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold mb-8">Contact</h2>
         <p className="text-xl opacity-90 mb-12 max-w-2xl mx-auto">
-          Let's work together! Reach out to me via email or GitHub.
+          Let's work together! Reach out via email or GitHub.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-6">
           <a 
-            href="mailto:tomas@example.com" 
+            href={`mailto:${email}?subject=${encodeURIComponent('Hello Tomas')}&body=${encodeURIComponent('Hi Tomas, ...')}`}
             className="group relative inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl hover:from-blue-500 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
           >
             <span className="relative z-10 text-white font-semibold text-lg">Email Me</span>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-500 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform -skew-x-12"></div>
           </a>
+          <button
+            onClick={handleCopy}
+            className="group relative inline-flex items-center px-8 py-4 bg-transparent border-2 border-white/20 rounded-xl hover:bg-white/10 transition-all duration-300"
+            aria-label="Copy email to clipboard"
+          >
+            <span className="relative z-10 text-white font-semibold text-lg">Copy Email</span>
+          </button>
           <a 
             href="https://github.com/zloutek1" 
             target="_blank" 

@@ -2,26 +2,29 @@
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 import React, {
-  ReactNode,
   createContext,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
+import type { ReactNode } from "react";
 
 interface ModalContextType {
   open: boolean;
   setOpen: (open: boolean) => void;
+  lastActiveElement: HTMLElement | null;
+  setLastActiveElement: (el: HTMLElement | null) => void;
 }
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState(false);
+  const [lastActiveElement, setLastActiveElement] = useState<HTMLElement | null>(null);
 
   return (
-    <ModalContext.Provider value={{ open, setOpen }}>
+    <ModalContext.Provider value={{ open, setOpen, lastActiveElement, setLastActiveElement }}>
       {children}
     </ModalContext.Provider>
   );
@@ -46,14 +49,19 @@ export const ModalTrigger = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const { setOpen } = useModal();
+  const { setOpen, setLastActiveElement } = useModal();
+  const buttonRef = useRef<HTMLButtonElement>(null);
   return (
     <button
+      ref={buttonRef}
       className={cn(
         "px-4 py-2 rounded-md text-black dark:text-white text-center relative overflow-hidden",
         className
       )}
-      onClick={() => setOpen(true)}
+      onClick={() => {
+        if (buttonRef.current) setLastActiveElement(buttonRef.current);
+        setOpen(true);
+      }}
     >
       {children}
     </button>
@@ -67,7 +75,7 @@ export const ModalBody = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const { open } = useModal();
+  const { open, setOpen, lastActiveElement } = useModal();
 
   useEffect(() => {
     if (open) {
@@ -77,9 +85,60 @@ export const ModalBody = ({
     }
   }, [open]);
 
-  const modalRef = useRef(null);
-  const { setOpen } = useModal();
+  const modalRef = useRef<HTMLDivElement>(null);
   useOutsideClick(modalRef, () => setOpen(false));
+
+  // Focus trap and keyboard handlers
+  useEffect(() => {
+    if (!open) return;
+    const node = (modalRef.current as unknown) as HTMLElement | null;
+    if (!node) return;
+
+    // Move focus into the dialog
+    const focusableSelectors = [
+      'a[href]',
+      'area[href]',
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      'iframe',
+      'object',
+      'embed',
+      '*[tabindex]:not([tabindex="-1"])',
+      '*[contenteditable="true"]',
+    ].join(',');
+    const focusable = Array.from(node.querySelectorAll<HTMLElement>(focusableSelectors));
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (first) first.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        setOpen(false);
+      }
+      if (e.key === 'Tab' && focusable.length > 0) {
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [open, setOpen]);
+
+  // Return focus to the trigger when closing
+  useEffect(() => {
+    if (!open && lastActiveElement) {
+      lastActiveElement.focus();
+    }
+  }, [open, lastActiveElement]);
 
   return (
     <AnimatePresence>
@@ -106,6 +165,9 @@ export const ModalBody = ({
               "min-h-[50%] max-h-[90%] md:max-w-[40%] bg-neutral-950 border border-neutral-800 md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
               className
             )}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Modal dialog"
             initial={{
               opacity: 0,
               scale: 0.5,
@@ -220,7 +282,7 @@ const CloseIcon = () => {
 // Hook to detect clicks outside of a component.
 // Add it in a separate file, I've added here for simplicity
 export const useOutsideClick = (
-  ref: React.RefObject<HTMLDivElement>,
+  ref: React.RefObject<HTMLElement | null>,
   callback: Function
 ) => {
   useEffect(() => {
