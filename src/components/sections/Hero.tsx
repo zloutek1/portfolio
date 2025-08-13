@@ -1,5 +1,5 @@
 import React from "react";
-import Orb from "@/components/ui/orb";
+import Orb from "@/components/ui/orb.tsx";
 
 export function Hero(): React.JSX.Element {
   return (
