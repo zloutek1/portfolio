@@ -34,10 +34,10 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   return (
     <div className="w-full font-sans" ref={containerRef}>
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
-        {/* Single shared vertical line */}
+        {/* Single shared vertical line - positioned differently for mobile vs desktop */}
         <div
           style={{ height: height + "px" }}
-          className="absolute left-31 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent via-neutral-700 to-transparent [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
+          className="absolute left-2 md:left-31 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent via-neutral-700 to-transparent [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)]"
         >
           <motion.div
             style={{ height: heightTransform, opacity: opacityTransform }}
@@ -46,21 +46,40 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         </div>
 
         {data.map((item, index) => (
-          <div key={index} className="grid grid-cols-[auto_20px_1fr] gap-4 pt-10">
-            {/* Date (title) first */}
-            <div className="self-start min-w-25 pt-1">
-              <h3 className="text-sm md:text-lg font-bold text-blue-300">{item.title}</h3>
+          <div key={index} className="pt-10">
+            {/* Desktop layout: 3 columns */}
+            <div className="hidden md:grid grid-cols-[auto_20px_1fr] gap-4">
+              {/* Date (title) */}
+              <div className="self-start min-w-25 pt-1">
+                <h3 className="text-lg font-bold text-blue-300">{item.title}</h3>
+              </div>
+
+              {/* Node */}
+              <div className="relative">
+                <div className="absolute left-1/2 -translate-x-1/2 h-8 w-8 rounded-full flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-full bg-neutral-800 border border-neutral-700" />
+                </div>
+              </div>
+
+              {/* Content */}
+              <div>{item.content}</div>
             </div>
 
-            {/* Node only, no per-item line */}
-            <div className="relative">
-              <div className="absolute left-1/2 -translate-x-1/2 h-8 w-8 rounded-full flex items-center justify-center">
-                <div className="h-3 w-3 rounded-full bg-neutral-800 border border-neutral-700" />
+            {/* Mobile layout: 2 columns */}
+            <div className="md:hidden grid grid-cols-[auto_1fr] gap-4">
+              {/* Node column */}
+              <div className="relative w-4 flex justify-center">
+                <div className="h-8 w-8 rounded-full flex items-center justify-center">
+                  <div className="h-3 w-3 rounded-full bg-neutral-800 border border-neutral-700" />
+                </div>
+              </div>
+
+              {/* Content column with date on top */}
+              <div className="min-w-0">
+                <h3 className="text-sm font-bold text-blue-300 mb-2">{item.title}</h3>
+                <div>{item.content}</div>
               </div>
             </div>
-
-            {/* Content last */}
-            <div>{item.content}</div>
           </div>
         ))}
       </div>
